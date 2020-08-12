@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>练习</title>
+    <style>
+        table{
+            border:1px solid red;
+        }
+        td{
+            border:1px solid red;
+        }
+        .classA{
+            background:#9cc;
+        }
+        .classB{
+            background:#aa9;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <table width="60%" cellspacing="0">
+            <tr>
+                <td>学号</td>
+                <td>名字</td>
+                <td>性别</td>
+            </tr>
+            <!-- 对象形式 -->
+            <!-- <tr v-for="(stu,i) in stus" :class='{classA:true,classB: i%2==1}'> -->
+            <!-- 三目运算 -->
+            <tr v-for="(stu,i) in stus" :class='i%2==1?"classA":"classB"'>
+                <td>{{ stu.id }}</td>
+                <td>{{ stu.name }}</td>
+                <td>{{ stu.gender=='F'?'女':'男' }}</td>
+            </tr>
+            <!-- 解构赋值 -->
+            <!-- <tr v-for="{id,name,gender} in stus">
+                <td>{{id}}</td>
+                <td>{{name}}</td>
+                <td>{{gender}}</td>
+            </tr> -->
+            <!-- for循环嵌套 -->
+            <!-- <tr v-for="stu in stus">
+                <td v-for="value in stu">{{value}}</td>
+            </tr> -->
+        </table>
+        <button @click="sort">点击按照性别排序</button>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                stus:[
+                    {id:1,name:'张三',gender:'M'},
+                    {id:2,name:'李丽',gender:'F'},
+                    {id:3,name:'王磊',gender:'M'},
+                    {id:4,name:'张苗',gender:'F'},
+                    {id:5,name:'王浩',gender:'M'}
+                ]
+            },
+            methods: {
+                sort(){
+                    this.stus.sort((a,b)=>{
+                        //  return b.id - a.id;
+                        return b.gender.charCodeAt(0) - a.gender.charCodeAt(0);
+                    })
+                    
+                   
+                }
+            },
+        });
+    </script>
+</body>
+</html>

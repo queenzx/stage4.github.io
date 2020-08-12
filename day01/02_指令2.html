@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>指令2</title>
+    <style>
+        .out{
+            width:400px;
+            height:400px;
+            background-color:#ccc;
+        }
+        .inner{
+            width:200px;
+            height:200px;
+            background-color:#c0c;
+        }
+        .style_red{
+            border:1px solid red;
+            height:100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- .self 只当事件是从侦听器绑定的元素本身触发时才触发回调 -->
+    <div id="app">
+        <!-- 冒泡 -->
+        <!-- .self也可以阻止冒泡 -->
+        <div class="out" @click.self="c1">
+            <!-- .stop 阻止冒泡 -->
+            <div class="inner" @click.stop="c2"></div>
+        </div>
+        <!-- .prevent 阻止默认行为 -->
+        <a href="http://www.baidu.com" @click.prevent>xxxx</a>
+        <input type="text" @blur="show">
+        <div>
+            <h3>v-bind:绑定属性</h3>
+            <button @click="load">加载图片</button>
+            <img src="./timg1.png" width="200px">
+            <img v-bind:src="path" width="300px" @click="change">
+            <!-- 简写 :class -->
+            <div :class="red"></div>
+            <a :href="baidu">百度一下</a>
+        </div>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                // path:'timg.png'
+                path:'timg.png',
+                red:'style_red',
+                baidu:'http://www.baidu.com'
+            },
+            methods: {
+                c1(){
+                    console.log('这是c1');
+                },
+                c2(){
+                    console.log('This is c2');
+                },
+                show(){
+                    alert('触发了onblur');
+                },
+                load(){
+                    alert('开始加载图片');
+                    setTimeout(()=>{
+                        this.path = 'timg.png';
+                    },2000)
+                },
+                change(){
+                    this.path = this.path == 'timg.png'?'timg1.png':'timg.png';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>指令1</title>
+</head>
+<body>
+    <div id="app">
+        <!-- {{ msg }} -->
+        <div v-text="msg"></div>
+        <div v-html="msg"></div>
+        <ul>
+            <li>v-if / v-show</li>
+            <!-- v-if删除dom元素节点 -->
+            <!-- v-show修改display的属性,节点还在 -->
+            <li>
+                <button @click="toggle">toggle</button>
+            </li>
+            <li v-if="show">这是v-if</li>
+            <li v-show="show">这是v-show</li>
+
+            <!-- show的值为true,v-if显示 -->
+            <li v-if="show">v-if</li>
+            <!-- show的值为false,v-else显示 -->
+            <li v-else>v-else</li>
+            <!-- v-if的值为true显示v-if的内容,为false时显示v-else的值 -->
+
+            <li><h1>v-for遍历</h1></li>
+            <li v-for="item in fruits">
+                {{ item }}
+            </li>
+            <!-- 嵌套es6写法 -->
+            <li><h1>v-for遍历</h1></li>
+            <li v-for="(item,index) in fruits">
+                {{ `${index}---${item}` }}
+            </li>
+
+            <li>
+                <h4>{{num}}</h4>
+                <button v-on:click="add">+</button>
+                <!-- v-on缩写@ -->
+                <button @click="reduce">-</button>
+            </li>
+        </ul>
+    </div>
+    <!-- 解释执行:从上往下执行 -->
+    <!-- 编译执行:先编译,再执行,如果出错将不会执行-->
+    <!-- 放在head里面解决加载慢,出现{{}}的问题,解决不了代码出错暴露{{}}的问题 -->
+    <script src="../vue.js"></script>
+    <script>
+        // 声明式渲染,所有值都需要在data声明出来,再渲染
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'<h1>This is data\'s  msg</h1>',
+                show:false,
+                num:0,
+                fruits:[
+                    'apple','pear','banana',
+                    'pineapple','origin','strawberry'
+                ]
+            },
+            methods: {
+                add(){
+                    // console.log(this);
+                    this.num++;
+                },
+                reduce(){
+                    this.num--;
+                },
+                toggle(){
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
