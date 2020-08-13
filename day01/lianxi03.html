@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>练习3</title>
 </head>
 <body>
     <div id="app">
@@ -12,11 +12,11 @@
         <input type="button" value="添加" @click="add"><br><br>
         <table border="1" cellspacing="0" cellpadding="20">
             <tr>
-                <td>编号</td>   
-                <td>名称</td>
-                <td>单价</td>
-                <td>数量</td>
-                <td>操作</td>
+                <th>编号</th>   
+                <th>名称</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>操作</th>
             </tr>
             <tr v-for="(product,i) in pro">
                 <td v-for="p in product">{{ p }}</td>
@@ -38,11 +38,11 @@
                     console.log(this.pro);
                     console.log(this.msg.split(' '));
                     var msg1 = this.msg.split(' ');
-                    /* var f = false;
-                    var idx = -1;
+                    var f = false;//假设不存在相同的商品
+                    var idx = -1;//假设有相同时的下标
                     for(var k in this.pro){
                         if(this.pro[k][1] == msg1[1]){
-                            f = true;
+                            f = true;//假设错误,有相同的
                             idx = k;
                             this.pro[k][3] = Number(msg1[3])+Number(this.pro[k][3]);
                         }
@@ -50,9 +50,12 @@
                     if(!f){
                         this.pro.push(msg1);
                     }else{
-                        this.pro.push(...this.pro.splice(idx,1))
-                    } */
-                    for(var k in this.pro){
+                        this.pro.push(...this.pro.splice(idx,1));
+                        this.pro.sort((a,b)=>{
+                            return a[0] - b[0];
+                        });
+                    }
+                    /* for(var k in this.pro){
                         if(this.pro[k][1] == msg1[1]){
                             f = true;
                             idx = k;
@@ -61,7 +64,7 @@
                             return ;
                         }
                     }
-                    this.pro.push(msg1)
+                    this.pro.push(msg1); */
                 },
                 del(k){
                     this.pro.splice(k,1);

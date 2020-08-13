@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>省市联动(computed/watch)</title>
+</head>
+<body>
+    <div id="app">
+        省份:
+        <select v-model="index">
+            <option v-for="(p,i) in pros" :value="i">{{p}}省</option>
+        </select>
+        <h3>城市1(watch实现):</h3>
+        <select v-model="idx">
+            <option v-for="(c,i) in cities1" :value="i">{{c}}市</option>
+        </select>
+        <h3>城市2(computed实现):</h3>
+        <select v-model="idx">
+            <option v-for="(c,i) in cities2" :value="i">{{c}}市</option>
+        </select>
+        
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                pros:[
+                    "江苏","山东","安徽","浙江","湖北"
+                ],
+                index:0,
+                idx:0,
+                cities1:[],
+                cities:[
+                    ["南京","苏州","扬州","泰州","徐州"],
+                    ["济南","日照","青岛","潍坊","莱芜"],
+                    ["合肥","六安","滁州","黄山","蚌埠"],
+                    ["宁波","杭州","温州","金华","义乌"],
+                    ["武汉","黄冈","黄石","宜昌","十堰"]
+                ]
+            },
+            methods: {},
+            computed:{
+                cities2(){
+                    // 依赖某个省份,根据发生的变化,返回不同的结果
+                    // this.idx = 0;//影响代码的执行
+                    return this.cities[this.index];
+                }
+            },
+            watch: {
+                index:{
+                    // 根据index的变化去给cities赋值
+                    handler(newVal){
+                        this.idx = 0;
+                        this.cities1 = this.cities[newVal];
+                    },
+                    immediate:true
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

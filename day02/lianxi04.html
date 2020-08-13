@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            编号:  
+            <select v-model="index">
+                <option v-for="(n,i) in id" :value="i"> {{ n }} </option>
+            </select>
+            名称:  
+            <select v-model="index">
+                <option v-for="(n,i) in name" :value="i"> {{ n }} </option>
+            </select>
+            单价:  
+            <select v-model="index">
+                <option v-for="(n,i) in price" :value="i"> {{ n }} </option>
+            </select>
+            数量:  
+            <!-- <select v-model="index">
+                <option v-for="(n,i) in count" :value="i"> {{ n }} </option>
+            </select> -->
+            <input type="number" name="count" v-model.number="count">
+            <button @click="add">添加</button>
+        </div>
+        <br>
+        <div>
+            <table border="1" cellspacing="0" cellpadding="20">
+                <tr>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>编辑</th>
+                </tr>
+                <tr v-for="(p,i) in products">
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.price }}</td>
+                    <td>{{ p.count }}</td>
+                    <td @click="del(i)">删除</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                index:0,
+                id:[1,2,3,4,5] ,
+                name:['海尔','美的','海信','格力','九阳'],
+                price:[2300,2500,3600,2000,1800],
+                // count:[20,65,35,45,80],
+                count:1,
+                products:[]
+            },
+            methods: {
+                add(){
+                    let obj ={
+                        id:this.id[this.index],
+                        name:this.name[this.index],
+                        price:this.price[this.index],
+                        // count:this.count[this.index]
+                        count:this.count
+                    }
+                    let f = false; // 假设不存在相同的商品
+                    for(let i=0;i<this.products.length;i++){
+                        let o = this.products[i];
+                        if(o.name==obj.name){
+                            f = true; // 假设错误，有相同的
+                            o.count = (obj.count-0)+(o.count-0);
+                        }
+                    }
+                    if(!f){
+                        // 数据不同，要添加
+                        this.products.push(obj)
+                    }
+                },
+                del(k){
+                    this.products.splice(k,1);
+                }
+            },
+            watch: {
+                index:{
+                    handler(val){
+
+                    },
+                    immediate:true
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -54,6 +54,7 @@
         new Vue({
             el:"#app",
             data:{
+                f:true,
                 stus:[
                     {id:1,name:'张三',gender:'M'},
                     {id:2,name:'李丽',gender:'F'},
@@ -64,15 +65,24 @@
             },
             methods: {
                 sort(){
-                    this.stus.sort((a,b)=>{
+                    /* this.stus.sort((a,b)=>{
                         //  return b.id - a.id;
                         return b.gender.charCodeAt(0) - a.gender.charCodeAt(0);
-                    })
-                    
-                   
+                    }); */
+                    // 老师示例
+                    this.f = !this.f;
+                    if(this.f){
+                        this.stus.sort((a,b)=>{
+                            return a.gender.charCodeAt(0) - b.gender.charCodeAt(0);
+                        });
+                    }else{
+                        this.stus.sort((a,b)=>{
+                            return a.id - b.id;
+                        });
+                    }  
                 }
-            },
-        });
+            }
+        })
     </script>
 </body>
 </html>
