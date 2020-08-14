@@ -54,7 +54,7 @@
             el: '#app',
             data: {
                 index:0,
-                num:3,
+                num:1,
                 pro:[],
                 pros:[
                     {id:'1001',name:'华为',price:'5000',count:58},
@@ -66,17 +66,17 @@
             },
             methods:{
                 add(){
-                    this.pro.count = this.num;
                     let f = false; // 假设不存在相同的商品
                     for(let i=0;i<this.products.length;i++){
                         let o = this.products[i];
                         if(o.name==this.pro.name){
                             f = true; // 假设错误，有相同的
-                            o.count = (this.pro.count-0)+(o.count-0);
+                            o.count = this.num+(o.count-0);
                         }
                     }
                     if(!f){
                         // 数据不同，要添加
+                        this.pro.count = this.num;
                         this.products.push(this.pro);
                         console.log(this.pro);
                         console.log(this.products);

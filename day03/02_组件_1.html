@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全局组件</title>
+</head>
+<body>
+    <h2>全局组件</h2>
+    <div id="app">
+        <my-com></my-com>
+        <my-com/>
+    </div>
+    <div id="app2"></div>
+    
+    <script src="../vue.js"></script>
+    <script>
+        // 创建一个子类,没有el选项,data必须是函数
+        let Child = Vue.extend({
+            data(){
+                return {
+                    num:1
+                }
+            },
+            watch: {
+                num(newVal){
+                    console.log(newVal);
+                }
+            },
+            template:`
+            <h1>{{ num }}</h1>
+            `
+        });
+        
+        // 自定义全局组件
+        /* 
+            参数:第一个表示组件名称,第二个表示组件的内容(可以是已将定义好的组件实例,也可以是含有vue选项的对象)
+            组件名称:如果是驼峰命名法,则调用的时候,可以直接使用,也可以改成以-连接的方式
+                    但是如果是以-命名的组件,则只能使用-的方式,而不能转换成驼峰的方式
+         */
+        Vue.component("my-com",Child);
+        // 方式二: 在视图中使用
+        new Vue({
+            el:"#app",
+            data:{num:1}
+        })
+
+        // 方式一:在template选项里使用
+        // Vue.component("MyCom",Child);
+        /* new Vue({
+            el:"#app",
+            data:{},
+            methods:{},
+            template:`
+            <div>
+                组件的使用:将组建名当成标签名来使用,既可以是单标签也可以是双标签
+                <my-com/>
+                <my-com></my-com>
+                <MyCom></MyCom>
+            </div>
+            `
+        }); */
+        
+        // 实例化并挂载到#app上,数据是通过函数创建的新的对象
+        // new Child().$mount("#app");
+        // 一个页面可以挂载多个实例对象
+        // new Child().$mount("#app2");
+    </script>
+</body>
+
+</html>

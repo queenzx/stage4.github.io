@@ -1,0 +1,79 @@
+第四阶段 前端渐进式框架——Vue
+第三天
+一、实例属性和方法
+	实例属性和方法都是定义在vue实例上的，为了方便在构造器外访问内部的属性和方法
+	1) vm.$watch( expOrFn, callback, [options] )
+		参数:
+			{string | Function} expOrFn
+			{Function | Object} callback
+			{Object} [options]
+			{boolean} deep	深度监听
+			{boolean} immediate	实时监听
+		用法:
+			观察 Vue 实例上的一个表达式或者一个函数计算结果的变化。回调函数得到的参数为新值和旧值。表达式只接受简单的键路径。对于更复杂的表达式，用一个函数取代。
+		示例:
+			// 立即以 `a` 的当前值触发回调
+			vm.$watch('a', function(){
+				console.log(111);
+			}, {
+				immediate: true
+			})
+	2) vm.$set( target, propertyName/index, value )
+		参数：
+			{Object | Array} target
+			{string | number} propertyName/index
+			{any} value
+		用法:	
+			向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新。它必须用于向响应式对象上添加新 property，因为 Vue 无法探测普通的新增 property (比如 this.myObject.newProperty = 'hi')
+		注意:对象不能是 Vue 实例，或者 Vue 实例的根数据对象。
+	3) vm.$refs
+		类型：Object
+		一个对象，持有注册过 ref attribute 的所有 DOM 元素和组件实例。
+		当数据发生变化时,不会立即去更新视图,所以拿到的内容还是数据变化之前的内容
+	4) vm.$nextTick( [callback] )
+		将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。它跟全局方法 Vue.nextTick 一样，不同的是回调的 this 自动绑定到调用它的实例上。
+		示例:
+			this.$nextTick(()=>{
+				console.log(this.$refs.dd.innerHTML);
+			})
+二、组件
+	是vue中一个强大的功能,可以说,vue的开发就是组件的开发
+	组件的制作,就是制作自定义的标签,标签名遵循变量命名规范,并且是一个可以重复使用的vue实例
+	组件的使用:将组建名当成标签名来使用,既可以是单标签也可以是双标签
+
+	1)两种方式定义组件:
+		-1) 全局定义:(02_组件_1.html)
+			Vue.component("my-com",Child)
+			参数:第一个表示组件名称,第二个表示组件的内容(可以是已将定义好的组件实例,也可以是含有vue选项的对象)
+            组件名称:如果是驼峰命名法,则调用的时候,可以直接使用,也可以改成以-连接的方式
+                    但是如果是以-命名的组件,则只能使用-的方式,而不能转换成驼峰的方式
+		-2) 局部定义:(02_组件_2.html)
+			在实例对象中的components选项里定义
+
+	2)在组建中使用指令和事件(03_组件中使用指令.html)
+
+
+	3)组件的嵌套(04_组件的嵌套.html)
+
+	4)父子组件之间的通信(数据的传递)
+	  组件实例的作用域是独立的,这样就意味着不能直接在子组件内部使用父组件的数据,反之亦然
+		1) 子组件接收父组件的数据
+			在子组件中定义props选项,在这个选项中定义一个属性,该属性可以接收父组件传递过来的数据
+			在父组件中,调用组件时,通过v-bind(简写就是:)来绑定该属性
+
+		2) 父组件接收子组件的数据
+			子组件通过$emit方法向父组件派发一个自定义事件
+			父组件在调用时,通过V-on(@)绑定自定义事件
+	5) 插槽
+		slot 简写: #
+		slot可以扩展组件内容,也就是说在定义组件时可以传递内容,可以分发组件的内容
+		具名插槽: 当需要多个插槽时,可以给插槽命名,设置name属性,在分发内容时,会根据名字来发
+		没有设置name属性的插槽默认是default
+		
+		<slot name="blue"></slot>
+		参数：插槽名 (可选，默认值是 default)
+		限用于:  1) <template>
+				2) 组件 (对于一个单独的带 prop 的默认插槽)
+		用法：提供具名插槽或需要接收 prop 的插槽。
+
+
