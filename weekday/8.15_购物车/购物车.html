@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <pro-list :pros="prosArr"></pro-list>
+        
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component("pro-list",{
+            props:{
+                pros:{
+                    type:Array,
+                    default:function(){
+                        return [];
+                    }
+                }
+
+            },
+            data(){
+				return {
+                    proList:[],
+                    total:0,
+                    pro:{}
+				};
+			},
+            methods:{
+                reduce(i){
+                    if(this.pros[i].num>1){
+                        this.pros[i].num--;
+                        this.pros[i].count++;
+                    }else{
+                        alert('数量不能少于1');
+                    }
+                },
+                add(i){
+                    if(this.pros[i].num<this.pros[i].count){
+                        this.pros[i].num++;
+                        this.pros[i].count--;
+                    }else{
+                        alert('库存不足');
+                    }
+                },
+                addCar(i){
+                    // 深拷贝
+                    let obj =JSON.parse(JSON.stringify(this.pros[i]))
+                    // console.log(this.pros[i]);
+                    this.pro = {
+                        price: this.pros[i].price,
+                        num:this.pros[i].num
+                    }
+                    let f = false;
+                    for(let k in this.proList){
+                        if(this.pros[i].pname == this.proList[k].pname){
+                            f = true;
+                            this.proList[k].num = (this.proList[k].num-0) + (obj.num-0);
+                        }
+                    }
+                    this.pros[i].num=1;
+                    if(!f){
+                        // this.proList.unshift(this.pros[i]);
+                        this.proList.unshift(obj);
+                    }
+                    this.getTotal();
+                },
+                getSum(){
+                    for(let k in this.proList){
+                        this.total+=(this.proList[k].price)*this.proList[k].num
+                    }
+                    // return this.total;
+                },
+                getTotal(){
+                    this.total=(this.pro.price-0)*this.pro.num+(this.total-0);
+                },
+                getTotal1(){
+                    this.total=(this.total-0)-(this.pro.price-0)*this.pro.num;
+                }
+            },
+            computed: {
+                t(){
+                    let s=0;
+                    this.pros.forEach(val=>{
+                        s+=val[num]
+                        
+                    })
+                    return s;
+                }
+            },
+            template:`
+            <div style="width:40%">
+                <h2>商品展示</h2>
+                <table border=1 width="100%" cellspacing=0>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>单价</th>
+                        <th>库存</th>
+                        <th>数量</th>
+                        <th>编辑</th>
+                    </tr>
+                    <tr v-for="(p,i) in pros" align=center>
+                        <td>{{p.pid}}</td>
+                        <td>{{p.pname}}</td>
+                        <td>{{p.price}}</td>
+                        <td>{{p.count}}</td>
+                        <td>
+                            <button @click="reduce(i)">-</button>
+                            <input type="number" v-model="p.num">
+                            <button @click="add(i)">+</button>
+                        </td>
+                        <td><button @click="addCar(i)">加入购物车</button></td>
+                    </tr>
+                </table>
+                <h2>购物车</h2>
+                <div>
+                    <pro-show :shops="proList" :sum="total" @father="getTotal" @father1="getTotal1"></pro-show>
+                </div>
+            </div>
+            `,
+            components:{
+                "pro-show":{
+                    props:{
+                        sum:Number,
+                        shops:{
+                            type:Array,
+                            default:function(){
+                                return [];
+                            }
+                        }
+                    },
+                    methods: {
+                        reduce(i){
+                            if(this.shops[i].num>1){
+                                this.shops[i].num--;
+                                this.shops[i].count++;
+                                this.$emit('father1');
+                            }else{
+                                alert('数量不能少于1');
+                            }
+                        },
+                        add(i){
+                            if(this.shops[i].num<this.shops[i].count){
+                                this.shops[i].num++;
+                                this.shops[i].count--;
+                                this.$emit('father');
+                            }else{
+                                alert('库存不足');
+                            }
+                        },
+                        del(i){
+                            this.shops.splice(i,1);
+                        }
+                    },
+                    template:`
+                    <div>
+                        <table border=1 width="100%" cellspacing=0>
+                            <tr>
+                                <th>编号</th>
+                                <th>名称</th>
+                                <th>单价</th>
+                                <th>库存</th>
+                                <th>数量</th>
+                                <th>编辑</th>
+                            </tr>
+                            <tr v-for="(s,i) in shops" align=center>
+                                <td>{{s.pid}}</td>
+                                <td>{{s.pname}}</td>
+                                <td>{{s.price}}</td>
+                                <td>{{s.count}}</td>
+                                <td>{{s.num}}</td>
+                                <td>
+                                    <button @click="reduce(i)">-</button>
+                                    <button @click="add(i)">+</button>
+                                    <button @click="del(i)">删除</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <p align="right">合计:{{t}}</p>
+                    </div>
+                    `
+                    // <p align="right">合计:{{num}}</p>
+                }
+            }
+        });
+        new Vue({
+            el: "#app",
+            data: {
+                prosArr: [
+                    {pid: 1,pname: "华为",price: 3000,count:600,num:1},
+                    {pid: 2,pname: "小米",price: 2000,count:800,num:1},
+                    {pid: 3,pname: "黑鲨",price: 1500,count:900,num:1},
+                    {pid: 4,pname: "一甲",price: 3000,count:500,num:1},
+                    {pid: 5,pname: "苹果",price: 2000,count:800,num:1},
+                    {pid: 6,pname: "三星",price: 1500,count:600,num:1}
+                ]
+            },
+            methods: {}
+        })
+    </script>
+</body>
+</html>
