@@ -33,6 +33,9 @@
     项目创建成功后,切换进项目根目录,再使用命令启动
     npm run serve
 
+    打包
+    npm run build
+
     vue-cli生成项目的目录结构:
     /--
         |-- node_modules
@@ -59,7 +62,7 @@
     3) 路由的配置文件 router/index.js
   
     4) 导航链接
-        <router-link to="/hello">Hello</router-link>
+        <router-link to="/hello">Hello</router-link>编译之后就是a超链接
 
         to="/hello" 表示跳转的路由路径
 
@@ -87,7 +90,7 @@
         }
         父路由中设置导航链接
         <router-link to="/父路由路径/子路由路径"></router-link>
-        同时在父组件中设施router-view
+        同时在父组件中设置router-view
 
 练习01
     添加一个导航链接photo

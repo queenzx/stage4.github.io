@@ -2,12 +2,18 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
+      <router-link to="/about?aaa=1&&bbb=222">About</router-link> |
       <router-link to="/hello">Hello</router-link> |
-      <router-link to="/father">Father</router-link> |
-      <router-link to="/photo">在线相册</router-link>
+      <!-- <router-link to="/father">Father</router-link> | -->
+      <!-- <router-link :to='{path:"/father",parmas:{num:2}}'>Father</router-link> | -->
+      <!-- 通过name属性找到相对应的组件 -->
+      <router-link :to='{name:"father",params:{num:2}}'>Father</router-link> |
+      <router-link to="/photo">在线相册</router-link> |
+      <router-link to="/singer">歌手列表</router-link>
     </div>
-    <router-view/>
+    <transition name="slide-fade">
+      <router-view />
+    </transition>
     <!-- 渲染出口:有几个出口就有几个视图 -->
     <!-- <router-view></router-view> -->
     <router-view name="a"></router-view>
@@ -35,5 +41,17 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.slide-fade-enter-active {
+  transition: all 1.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 1.8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

@@ -9,6 +9,11 @@
 
 <script>
 export default {
-    
+    created() {
+        // console.log(this.$route);
+        // console.log(this.$route.params);
+        // console.log(this.$route.params.num);
+        // console.log("$this.router",this.$router);
+    },
 }
 </script>
