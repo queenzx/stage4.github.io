@@ -1,0 +1,25 @@
+第四阶段 前端渐进式框架——Vue
+第六天
+小说案例
+    一、创建项目
+        1) 使用vue ui进入页面找到day06下面创建novel小说项目
+        2) 把router文件夹下的index.js文件拖到src文件夹下,重命名为 router.js
+        3) 把App.vue里面的导航栏修改一下
+        4) 在src文件夹下新建api文件夹,在api文件夹下新建getData.js文件(获取其他网站信息使用)
+        5) 在components文件夹下新建
+                        show.vue    显示分类的小说列表
+                        ChapterList.vue  显示小说的章节列表
+                        Content.vue   显示小说章节的内容
+        6) 在router.js文件下,引入文件,创建相对应的路由
+    二、安装
+    1) 安装插件
+        day06--右击git bash Here 输入命令vue ui进入项目创建页面
+        创建完成之后安装插件
+        1.添加vue-router,安装结束之后,点击继续
+        2.添加插件->搜索boostrap->选第一个点后面的+进行安装,完成安装之前关闭use,然后点击完成
+    2) 安装模块
+        1. 安装jquery(novel)
+            npm i jquery -S
+        2. 安装got模块(stage4)
+            cnpm i got
+            cnpm i express got(先把node_modules里的文件全删掉,再执行此命令)

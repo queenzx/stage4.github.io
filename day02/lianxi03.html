@@ -52,7 +52,7 @@
                 index:{
                     // 根据index的变化去给cities赋值
                     handler(newVal){
-                        this.idx = 0;
+                        this.idx = 0;//解决切换省份显示不是第一个城市的问题
                         this.cities1 = this.cities[newVal];
                     },
                     immediate:true
