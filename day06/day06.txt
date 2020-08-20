@@ -5,7 +5,14 @@
         1) 使用vue ui进入页面找到day06下面创建novel小说项目
         2) 把router文件夹下的index.js文件拖到src文件夹下,重命名为 router.js
         3) 把App.vue里面的导航栏修改一下
-        4) 在src文件夹下新建api文件夹,在api文件夹下新建getData.js文件(获取其他网站信息使用)
+        4) 在src文件夹下新建api文件夹,在api文件夹下新建getData.js文件(获取其他网站信息使用)--中间键
+            也可以在package.json中加
+                        "vue":{
+                            "devServer":{
+                            "proxy": "http://www.biquge.info"
+                            }
+                        }
+            解决跨域问题
         5) 在components文件夹下新建
                         show.vue    显示分类的小说列表
                         ChapterList.vue  显示小说的章节列表
@@ -23,3 +30,7 @@
         2. 安装got模块(stage4)
             cnpm i got
             cnpm i express got(先把node_modules里的文件全删掉,再执行此命令)
+
+
+补充:
+    1) 从githubs拉取之后,在novel中git bush Here 输入命令npm i 安装匹配package里面的模块

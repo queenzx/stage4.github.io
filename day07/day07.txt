@@ -1,0 +1,78 @@
+第四阶段 前端渐进式框架——Vue
+第七天
+一、vuex
+    1) vue-router,vuex都是vue官方提供并维护的插件
+        - 1) vuex是专门为vue设计的集中式的状态管理模式
+        - 2) 把每个组件中共享的状态抽取出来,以全局单例模式去管理,无论在哪个组件中,都可以获取状态或触发行为
+        - 3) vuex的核心是store,他们包含应用中的大部分state
+
+    2) 什么时候使用vuex
+        - 1) 当前数据足够多,需要管理的状态足够复杂时
+        - 2) 多个组件共同依赖同一个状态时
+        - 3) 多个组件都可能改变同一个状态
+    
+    3) vuex的组成部分
+        state: 存放状态
+        getter: 过滤状态
+        mutation: 修改状态
+        action: 类似于mutation
+        module: 模块化
+        -1) state  
+            组件中获取state的几种方式:
+            方式一:
+                通过store对象获取其中的state中的状态
+                    this.$store.state.xxx
+            方式二:
+                使用mapState辅助函数 
+                mapState方法的返回值就是一个对象
+                mapState({key:state=>state.xxx})
+                mapState(["key","key",....])
+                computed: mapState({
+                    showNum:state=>state.num
+                })
+            合并写法:将方式一和方式二合并
+                使用扩展符号将对象打散合并到另一个对象里面
+            方式三:参数映射状态
+                数组的字符串元素对应着store中的state里面定义的状态属性,必须保持一致,使用时,在模板中就是使用num
+                返回的{{num2:state.num2,num:state.num}}
+                ...mapState([num]),//这个num和store的index.js中的num对应
+                ...mapState(['num2','num','stus']),
+        -2) getter
+             - 对state的过滤
+             - 当需要从state中派生出一个新的值出来的时候，就可以使用getters
+             - getters的返回值会根据他的依赖被缓存起来，只有当一来发生变化，才会被触发
+        -3) mutation --- (mutation 必须是同步函数)
+             - 改变state状态
+             - mutation是改变vuex的state的唯一方式
+             - mutation类似于事件，每一个mutation都有一个事件类型type和一个毁掉幻术handler，该回调函数就是事件改变state的逻辑
+             - 可以接收state作为第一参数
+        -4) action
+             - action的功能类似于mutation
+             - action是提交给mutation的,mutation直接修改state
+             - action可以处理异步操作,mutation只能是同步
+             - action可以封装mutation
+                Action 提交的是 mutation,而不是直接变更状态。
+                Action 可以包含任意异步操作。
+
+
+    补充:
+        1) 在state中定义共享的状态或数据
+        2) 在各个组件中获取状态并渲染到视图模板上
+            获取?
+                this.$store.state.xxx
+                ...mapState(["xxx,"xxx",...])
+        3) 用户在页面派发事件
+            派发?
+            this.$store.dispatch("事件名")
+            派发的事件在actions中定义
+            actions中定义的事件里提交mutation
+            context.commit("mutation中定义的事件")
+            ...mapActions(["xxx","xxx",...])
+        4) mutation提交修改
+            this.$store.commit("mutation中定义的事件")
+            ...mapMutations(["xxx","xxx",...])
+
+
+
+
+    
