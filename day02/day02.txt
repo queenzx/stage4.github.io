@@ -16,7 +16,7 @@
         当数据需要被计算得到一个新的值的时候,就可以使用computed,这样可以节省性能损耗
 四、watch选项
     监听数据的状态变化
-    可以监听data里面的数据,也可以computed的属性变化
+    可以监听data里面的数据,也可以computed的属性变化+
 
     computed 和 watch 的区别
         1) computed: 根据依赖的值的变化计算得出新的状态,计算得到的值需要挂载到vue实例上

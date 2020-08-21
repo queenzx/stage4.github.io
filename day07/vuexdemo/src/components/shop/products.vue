@@ -27,11 +27,11 @@ export default {
     data() {
         return {
             props:[
-                {id:1,name:'海尔',price:3000},
-                {id:2,name:'华为',price:4000},
-                {id:3,name:'小米',price:2000},
-                {id:4,name:'联想',price:4500},
-                {id:5,name:'戴尔',price:3200},
+                {id:1,name:'海尔',price:3000,count:1},
+                {id:2,name:'华为',price:4000,count:1},
+                {id:3,name:'小米',price:2000,count:1},
+                {id:4,name:'联想',price:4500,count:1},
+                {id:5,name:'戴尔',price:3200,count:1},
             ]
         }
     },
@@ -40,13 +40,16 @@ export default {
         ...mapGetters(["cartPro"])
     },
     methods: {
-        ...mapMutations(["addPro"]),
+        ...mapMutations(["addPro","addCount","reduceCount"]),
         add(p){0
             let cart = this.cartPro;
             let f = false;// 假设没有
             for(let i=0;i<cart.length;i++){
                 if(p.name==cart[i].name){
                     f = true;
+                    // 重复的商品,数量增加1
+                    // cart[i].count++;//状态不会变化
+                    this.addCount({idx:i});
                     break;
                 }
             }
@@ -54,10 +57,12 @@ export default {
                 this.addPro({
                     pro:p
                 })
+            }else{//已存在,增加里面的count
+                
             }
         },
-        reduce(){
-
+        reduce(p){
+            this.reduceCount({name:p.name});
         }
     },
 }

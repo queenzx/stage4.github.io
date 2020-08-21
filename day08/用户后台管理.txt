@@ -1,0 +1,7 @@
+后台管理系统
+一、步骤:
+    1)创建client脚手架项目
+    2)在day08下新建serve文件夹,在server新建app.js
+    3)cnpm init -y
+    4)安装模块:cnpm i -S express ejs mongoose
+    5)
