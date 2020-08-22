@@ -92,7 +92,7 @@ export default new Vuex.Store({
         state.num++;
       },2000);
     }
-  },
+  },  
   actions: {
     // 参数不是state,因为actions不能修改state
     actAdd(context){

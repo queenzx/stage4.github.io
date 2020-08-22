@@ -34,9 +34,26 @@ function addEmp(emp){
 		})
 	})
 }
+
+function removeEmp(emp){
+	return new Promise((resolve,reject)=>{
+		ajax({
+			url:'http://localhost:4000/delete',
+			data:{emp:emp},
+			success(result){
+				console.log(result);
+				resolve(result);
+			},
+			error(){
+				reject('error');
+			}
+		})
+	})
+}
   
   
 export default {
 	getAllEmps,
-	addEmp
+	addEmp,
+	removeEmp
 }

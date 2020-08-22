@@ -32,3 +32,15 @@ app.get('/add',function(req,res){
         res.send({status:'SUCCESS'});
     })
 });
+
+// 删除员工
+app.get('/delete',function(req,res){
+    let emp = req.query.emp;
+    User.deleteOne(emp,function(err){
+        if(err){
+            res.send({status:'ERROR',data:null});
+            return ;
+        }
+        res.send({status:'SUCCESS'});
+    })
+});

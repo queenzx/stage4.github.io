@@ -14,6 +14,9 @@ export default new Vuex.Store({
     },
     addEmp(state,payload){
       state.emps.push(payload.emp);
+    },
+    removeEmp(state,payload){
+      state.emps.splice(payload.idx,1);
     }
   },
   actions: {
