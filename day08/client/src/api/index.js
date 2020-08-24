@@ -35,16 +35,21 @@ function addEmp(emp){
 	})
 }
 
-function removeEmp(emp){
+function getEmpInfo(empId,empName){
 	return new Promise((resolve,reject)=>{
 		ajax({
-			url:'http://localhost:4000/delete',
-			data:{emp:emp},
+			url:'http://localhost:4000/getEmpInfo',
+			data:{empId,empName},
 			success(result){
 				console.log(result);
-				resolve(result);
+				if(result.status == 'SUCCESS'){
+					resolve(result.data);
+				}else{
+					reject('error');
+				}
 			},
-			error(){
+			error(err){
+				console.log(err);
 				reject('error');
 			}
 		})
@@ -55,5 +60,5 @@ function removeEmp(emp){
 export default {
 	getAllEmps,
 	addEmp,
-	removeEmp
+	getEmpInfo
 }

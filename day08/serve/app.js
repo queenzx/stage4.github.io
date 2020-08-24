@@ -33,14 +33,20 @@ app.get('/add',function(req,res){
     })
 });
 
-// 删除员工
-app.get('/delete',function(req,res){
-    let emp = req.query.emp;
-    User.deleteOne(emp,function(err){
+// 获取某员工的数据
+app.get('/getEmpInfo',function(req,res){
+    let query = req.query;
+    // {empId:'xxx',empName:'xxx'}
+    User.find(query,function(err,docs){
         if(err){
-            res.send({status:'ERROR',data:null});
+            console.log(err);
+            res.send({status:"ERROR",msg:"网络故障"});
             return ;
         }
-        res.send({status:'SUCCESS'});
+        if(docs.length==0){
+            res.send({status:"ERROR",msg:"查无此数据"});
+            return ;
+        }
+        res.send({status:"SUCCESS",data:docs[0]});
     })
-});
+})

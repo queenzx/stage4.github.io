@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import List from './components/List.vue'
-import AddEmp from './components/AddEmp.vue';
+import AddEmp from './components/AddEmp.vue'
+import Modify from './components/Modify.vue';
 
 Vue.use(VueRouter)
 
@@ -15,7 +16,13 @@ const router = new VueRouter({
     },
     {
       path:'/list',
-      component:List
+      component:List,
+      children:[
+        {
+          path:"modify",
+          component:Modify
+        }
+      ]
     },
     {
       path:'/add',

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="list">
         <div class="container">
             <div class="row">
                 <div class="col-sm-1">编号</div>
@@ -9,8 +9,9 @@
                 <div class="col-sm-1">职业</div>
                 <div class="col-sm-2">联系电话</div>
                 <div class="col-sm-2">地址</div>
+                <div class="col-sm-1">状态</div>
                 <div class="col-sm-1">学历</div>
-                <div class="col-sm-2">操作</div>
+                <div class="col-sm-1">操作</div>
             </div>
         </div>
         <div class="container">
@@ -37,14 +38,17 @@
                     {{emp.address}}
                 </div>
                 <div class="col-sm-1">
+                    {{emp.status?"离职":"在职"}}
+                </div>
+                <div class="col-sm-1">
                     {{emp.edu}}
                 </div>
-                <div class="col-sm-2">
-                    <span>管理</span>&nbsp;
-                    <span @click="del(emp,i)">删除</span>
+                <div class="col-sm-1">
+                    <span @click="modify(emp)">管理</span>
                 </div>
             </div>
         </div>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -71,17 +75,14 @@ export default {
                 })
             })
         },
-        del(emp,i){
-            let f = confirm('确认删除这个员工吗');
-            if(!f){
-                alert('');
-            }else{
-                util.removeEmp(emp).then(data => {
-                    console.log(data);
-                    this.removeEmp({idx:i});
-                })
-            }
-            
+        modify(emp){
+            this.$router.push({
+                path:'/list/modify',
+                query:{
+                    empId:emp.empId,
+                    empName:emp.empName
+                }
+            })
         }
 
     }
@@ -89,6 +90,9 @@ export default {
 </script>
 
 <style scoped>
+    .list{
+        position: relative;
+    }
     .row>div{
         border:1px solid black;
     }
