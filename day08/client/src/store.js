@@ -17,6 +17,23 @@ export default new Vuex.Store({
     },
     removeEmp(state,payload){
       state.emps.splice(payload.idx,1);
+    },
+    modifyEmp(state,payload){
+      // filter =>{empId:xxx}
+      let  filter = payload.filter;
+      // filter =>{xx:xx,xx:xx,xx:xx,...}
+      let data = payload.data;
+      for(let i=0;i<state.emps.length;i++){
+        let emp = state.emps[i];
+        if(emp.empId == filter.empId){
+          // 方法1:在数据传递过来之前加上id
+          // state.emps[i] = data;
+          // 方法2:使用扩展运算符,进行拼接
+          state.emps[i] = {...filter,...data};
+          break;
+        }
+      }
+
     }
   },
   actions: {

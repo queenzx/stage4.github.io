@@ -1,5 +1,6 @@
 <template>
     <div class="list">
+        <button @click="toggle" class="btn btn-warning">{{toggleShow}}</button>
         <div class="container">
             <div class="row">
                 <div class="col-sm-1">编号</div>
@@ -15,7 +16,7 @@
             </div>
         </div>
         <div class="container">
-            <div class="row" v-for="(emp,i) in emps" :key="i">
+            <div class="row" v-for="(emp,i) in filterEmps" :key="i">
                 <div class="col-sm-1">
                     {{emp.empId}}
                 </div>
@@ -56,8 +57,32 @@
 import {mapState,mapMutations} from 'vuex';
 import util from '../api';
 export default {
+    data() {
+        return {
+            status:1
+        }
+    },
     computed: {
-        ...mapState(['emps'])
+        ...mapState(['emps']),
+        toggleShow(){
+            return this.status==1?'所有信息':this.status==2?'所有在职':'所有离职';
+        },
+        filterEmps(){
+            let onEmps = [];//所有在职
+            let offEmps = [];//所有离职
+            let emps = this.emps;//所有的
+            for(let i=0;i<emps.length;i++){
+                if(emps[i].status){
+                    // 值为true,表示离职
+                    offEmps.push(emps[i]);
+                }else{//在职的
+                    onEmps.push(emps[i]);
+                }
+            }
+            // 1 显示所有 2 显示在职 3 显示离职
+            return this.status==1?this.emps:this.status==2?onEmps:offEmps;
+
+        }
     },
     beforeRouteEnter(to,from,next){
         // console.log('beforeRouteUpdate');
@@ -83,6 +108,17 @@ export default {
                     empName:emp.empName
                 }
             })
+        },
+        toggle(){
+            // this.status==1?this.status=2:this.status==2?this.status=3:this.status=1;
+            this.status = this.status==1?2:this.status==2?3:1;
+            /* if(this.status==1){
+                this.status=2
+            }else if(this.status==2){
+                this.status=3
+            }else{
+                this.status=1
+            } */
         }
 
     }
@@ -103,5 +139,8 @@ export default {
     span:hover{
         cursor: pointer;
         color:#ccc;
+    }
+    button{
+        margin-bottom:5px;
     }
 </style>

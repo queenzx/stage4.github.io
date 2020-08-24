@@ -110,4 +110,7 @@ export default {
 .center {
   text-align: center;
 }
+button{
+	margin-top:10px;
+}
 </style>

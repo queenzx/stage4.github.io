@@ -1,8 +1,11 @@
 const express = require('express');
 const {User} = require('./model');
+const { raw } = require('express');
 const app = express();
 
 app.listen(4000);
+
+app.use(express.urlencoded({extended:true}));
 
 app.use(function(req,res,next){
     res.header("Access-Control-Allow-Origin","*");
@@ -48,5 +51,23 @@ app.get('/getEmpInfo',function(req,res){
             return ;
         }
         res.send({status:"SUCCESS",data:docs[0]});
+    })
+})
+
+// 修改员工信息
+app.post('/modify',function(req,res){
+    let filter = req.body.filter;
+    let data = req.body.data;
+    User.updateOne(filter,data,(err,raw)=>{
+        if(err){
+            console.log(err);
+            res.send({status:"ERROR",msg:"网络故障"});
+            return ;
+        }
+        if(raw.nModified==0){
+            res.send({status:"ERROR",msg:"数据未修改"});
+            return ;
+        }
+        res.send({status:"SUCCESS"});
     })
 })

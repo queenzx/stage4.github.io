@@ -1,10 +1,12 @@
 <template>
-    <div class="modify">
+    <div class="modify" ref="modify">
         <h1>modify</h1>
+        <div class="close" @click="back">X</div>
+       <span class="glyphicon glyphicon-remove-circle"></span>
         <div v-if="emp==null">
             <h3>数据加载中</h3>
         </div>
-        <div v-else class="container">
+        <div v-else class="container" ref="container">
             <div class="row">
                 <div class="col-sm-5">empId:</div>
                 <div class="col-sm-5">
@@ -66,13 +68,24 @@
                     </select>
                 </div>
             </div>
-            <button class="btn btn-info" >修改</button>
+            <div class="row">
+                <div class="col-sm-5">status:</div>
+                <div class="col-sm-5">
+                    <select v-model="status" class="form-control">
+                        <option value="false">在职</option>
+                        <option value="true">离职</option> 
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-info" @click="mod">修改</button>
         </div>
     </div>
 </template>
 
 <script>
 import util from '../api/index.js';
+import $ from 'jquery';
+import {mapMutations} from 'vuex';
 export default {
     data() {
         return {
@@ -84,7 +97,8 @@ export default {
 			position:'销售',
 			telephone:'',
 			address:'',
-			edu:'高中以下'
+            edu:'高中以下',
+            status:false
         }
     },
     /* beforeRouteUpdate (to, from, next) {
@@ -98,17 +112,73 @@ export default {
         let {empId,empName} = to.query;
         next(vm=>{
             vm._getEmpInfo(empId,empName);
-
         });
     },
+    updated() {
+        // 获取两个标签，并转换成jQuery对象，跟id一样
+        let $con = $(this.$refs.container);
+        let $mod = $(this.$refs.modify);
+        let con_h = parseInt($con.css('height'));
+        let mod_h = parseInt  ($mod.css('height'));
+        // console.log(con_h,mod_h);
+        if(con_h > mod_h){ //'100px'字符串转成num
+            $mod.css("height",con_h+70)
+        }
+        
+    },
     methods: {
+        ...mapMutations(["modifyEmp"]),
         _getEmpInfo(empId,empName){
             // 获取某个员工的数据
             util.getEmpInfo(empId,empName).then(data=>{
+                // 取data赋值给this.emp
                 this.emp = data;
+                // 给每一个属性重新赋值
+                this.empId = this.emp.empId;
+                this.empName = this.emp.empName;
+                this.gender = this.emp.gender;
+                this.age = this.emp.age;
+                this.position = this.emp.position;
+                this.telephone = this.emp.telephone;
+                this.address = this.emp.address;
+                this.edu = this.emp.edu;
+                this.status = this.emp.status;
             }).catch(err=>{
                 console.log(err);
             });
+        },
+        back(){
+            this.$router.go(-1);
+            // this.$router.back(1);
+        },
+        mod(){
+            // 提交
+            // 修改的条件
+            let filter = {empId:this.empId};
+            let data = {
+                // ...filter,
+                // empId : this.empId,
+                empName : this.empName,
+                gender : this.gender,
+                age : this.age,
+                position : this.position,
+                telephone : this.telephone,
+                address : this.address,
+                edu : this.edu,
+                status : this.status,
+            }
+            util.modify(filter,data).then(res=>{
+                alert(res);
+                // 修改状态管理里面的数据
+                // this.$route.commit('modifyEmp');//太麻烦
+                this.modifyEmp({
+                    filter,data
+                })
+            }).catch(err=>{
+                alert(err);
+            }).finally(()=>{
+                this.$router.push('/');
+            })
         }
     },
 }
@@ -120,7 +190,7 @@ export default {
         top:0;left:0;
         right:0;bottom:0;
         z-index:10;
-        background:white;
+        background:skyblue;
     }
     .row {
         margin-top: 5px;
@@ -130,5 +200,18 @@ export default {
     }
     .center {
         text-align: center;
+    }
+    .close{
+        position: absolute;
+        top:20px;right:50px;
+        width:30px;
+        height:30px;
+        border-radius:50%;
+        background: slategrey;
+        line-height:30px;
+        cursor: pointer;
+    }
+    button{
+        margin-top:10px;
     }
 </style>

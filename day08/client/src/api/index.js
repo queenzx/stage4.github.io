@@ -55,10 +55,32 @@ function getEmpInfo(empId,empName){
 		})
 	})
 }
+
+function modify(filter,data){
+	return new Promise((resolve,reject)=>{
+		ajax({
+			url:'http://localhost:4000/modify',
+			data:{filter,data},
+			method:'post',
+			success(res){
+				if(res.status=="ERROR"){
+					reject('修改失败');
+					return ;
+				}
+				resolve('修改成功');
+			},
+			error(err){
+				console.log(err);
+				reject('修改失败');
+			}
+		})
+	})
+}
   
   
 export default {
 	getAllEmps,
 	addEmp,
-	getEmpInfo
+	getEmpInfo,
+	modify
 }

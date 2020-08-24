@@ -13,7 +13,7 @@ import {mapMutations} from 'vuex';
 export default {
     data() {
         return {
-            fruit:''
+            fruit:'' 
         }
     },
     // 方式1: 使用定义好的方法名,不能扩展
