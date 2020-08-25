@@ -10,7 +10,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,//配置、接口代理以及其他配置
-  routes:[
+  routes:[ 
     {
       path:'/',
       component:DemoState
