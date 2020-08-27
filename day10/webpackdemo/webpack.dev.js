@@ -12,7 +12,7 @@ module.exports = merge(base,{
         port:4001,//端口号
         open:true,//自动打开浏览器
         overlay:{
-            error:true,//出错时显示错误
+            errors:true,//出错时显示错误
         },
         hot:true//开启热加载
     }

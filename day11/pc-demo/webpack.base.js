@@ -7,6 +7,7 @@ let { CleanWebpackPlugin } = require('clean-webpack-plugin');
 let MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // vue插件
 let VuePlugin = require('vue-loader/lib/plugin');
+let path = require('path');
 
 module.exports = {
     resolve:{
@@ -14,7 +15,7 @@ module.exports = {
         extensions:[".js",".css",".vue"],
         // 别名
         alias:{
-            "@css":"../css"
+            "@slide":path.resolve(__dirname,"src/assets/slideShow")
         }
     },
     //入口文件
@@ -33,16 +34,11 @@ module.exports = {
         rules:[
             // 处理css
             {
-                test: /\.(c|le)ss$/,
+                test: /\.css$/,
                 use:[
                     MiniCssExtractPlugin.loader,//独立打包成一个css文件
                     // 'vue-style-loader',
-                    {
-                        loader:'css-loader',
-                        options:{
-                            modules:true//css样式模块化
-                        }
-                    }
+                    'css-loader'
                 ]
             },
             // 处理图片
@@ -59,11 +55,16 @@ module.exports = {
                         // 输出路径
                         outputPath:'images/',
                         // 限制图片大小
-                        limit:20*1024
+                        limit:20*1024,
+                        esModule:false//默认是true,转换成模块化对象
                     }
                 }
             },
             // babel处理ES6
+            {
+                test:/\.(ttf|woff)$/,
+                use:'file-loader'
+            },
             {
                 test:/\.js$/,
                 use:'babel-loader',

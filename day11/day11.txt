@@ -15,4 +15,7 @@
         index.html   挂载页面
 
     5) 安装vue路由和vue:  cnpm i -S vue-router vuex
-    6) 
+    6) 在components下新建Main.vue,配置相关路由并引用
+    7) 安装 cnpm i -S axios
+    8) 安装 cnpm i -D babel-plugin-component 
+            cnpm i element-ui -S

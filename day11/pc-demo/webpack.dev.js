@@ -10,10 +10,19 @@ module.exports = merge(base,{
         contentBase:__dirname+ '/dist',
         host:'localhost',//主机名
         port:4001,//端口号
-        open:true,//自动打开浏览器
+        open:false,//自动打开浏览器
         overlay:{
-            error:true,//出错时显示错误
+            errors:true,//出错时显示错误
         },
-        hot:true//开启热加载
+        hot:true,//开启热加载
+        proxy:{
+
+        },
+        before(app){
+            let data = require("./goods.json");
+            app.get("/getdata",(req,res)=>{
+                res.send(data);
+            })
+        }
     }
 })

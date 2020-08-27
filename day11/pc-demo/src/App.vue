@@ -16,7 +16,7 @@
       </div>
       </div>
       <div class='container'>
-        
+        <router-view></router-view>
       </div>
       <div class='app-foot'>
           <p>© 2017 web vue-project</p>
