@@ -39,6 +39,7 @@ module.exports = {
           }
         }
       },
+      // 字体文件
       {
         test:/\.(ttf|woff)$/,
         use:'file-loader'

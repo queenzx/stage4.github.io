@@ -32,17 +32,28 @@
       <!-- 幻灯片组件 -->
       <Slide :pics="slideArr"></Slide>
       <!-- 产品展示  -->
-      <div class="index-board-list">
-        <!-- <div :class="['index-board-item',`index-board-${idx}`]" v-for="(list,idx) in showList" :key="idx">
+      <!-- <div class="index-board-list">
+        <div :class="['index-board-item',`index-board-${idx}`]" v-for="(list,idx) in showList" :key="idx">
           <div class="index-board-item-inner">
             <h2>{{list.title}}</h2>
             <p class="line-last">{{list.description}}</p>
             <el-button type="primary" class="index-board-button" :disabled="list.saleout">立即购买</el-button>
           </div>
-        </div> -->
-        <ProductShow :products="showList"></ProductShow>
-      </div>
+        </div>
+      </div> -->
+        <!-- 自己写的 -->
+        <!-- <ProductShow :products="showList"></ProductShow> -->
+        <!-- 老师写的 -->
+        <show-products :items="showList" @buyOne="buyOne"></show-products>
     </div>
+    <!-- 登录遮罩层 -->
+    <Dialog v-show="showLog" @close="close">
+      <Login></Login>
+    </Dialog>
+    <!-- 购买遮罩层 -->
+    <Dialog v-show="showBuy" @close="close">
+      <div>{{info}}</div>
+    </Dialog>
   </div>
 </template>
 
@@ -50,11 +61,16 @@
 import AllProducts from './AllProducts.vue'
 import NewList from './NewList.vue'
 import Slide from './Slide'
-import ProductShow from './ProductShow'
+// import ProductShow from './ProductShow'
+import ShowProducts from './ShowProducts'
 import Dialog from './Dialog'
+import Login from './Login'
+
 export default {
   data() {
     return {
+      showBuy:false,
+      info:"",
       productList: {
         /*产品信息*/
 
@@ -153,13 +169,31 @@ export default {
       ],
     };
   },
+  props:{
+    showLog: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    buyOne(title){
+      this.info = title;
+      this.showBuy = true
+    },
+    close(){
+      this.showBuy = false
+      this.$emit('close')
+    }
+  },
   // 注册组件
   components:{
     AllProducts,
     NewList,
     Slide,
-    ProductShow,
-    Dialog
+    // ProductShow,
+    ShowProducts,
+    Dialog,
+    Login
   }
 }; 
 </script>
@@ -209,16 +243,22 @@ export default {
 .index-left-block li a {
   color: #666;
 }
+/* .index-board-list {
+  overflow: hidden;
+} */
 .index-board-list {
   overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .index-board-item {
-  float: left;
+  /* float: left; */
   width: 400px;
   background: #fff;
   box-shadow: 0 0 1px #ddd;
   padding: 20px;
-  margin-right: 20px;
+  /* margin-right: 20px; */
   margin-bottom: 20px;
 }
 .index-board-item:nth-child(even){

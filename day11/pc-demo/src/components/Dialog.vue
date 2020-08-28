@@ -1,39 +1,53 @@
 <template>
   <div>
-    <div class="dialog-wrap">
-      <!-- 遮罩层 -->
-      <div class="dialog-cover"></div>
-      <!-- 弹出框的动画效果 -->
-      <div class="dialog-content">
-        <p class="dialog-close">x</p>
-        <slot></slot>
+    <transition name="drop">
+      <div class="dialog-wrap">
+        <!-- 遮罩层 -->
+        <div class="dialog-cover"></div>
+        <!-- 弹出框的动画效果 -->
+        <div class="dialog-content">
+          <p class="dialog-close" @click="close">x</p>
+          <slot></slot>
+        </div>
       </div>
-    </div>
+    </transition>
+    
   </div>
 </template>
 
 <script>
-export default {};
+// import {mapState,mapMutations} from 'vuex'
+export default {
+    /* computed: mapState(['show']),
+    methods: mapMutations(['close']) */
+  methods: {
+    close(){
+      this.$emit('close')
+    }
+  }
+
+};
 </script>
 
 <style scoped>
 .drop-enter-active {
   transition: all 0.5s ease;
 }
-/* .drop-leave-active {
-    transition: all .3s ease;
-    } */
+.drop-leave-active {
+  transition: all .3s ease;
+}
 .drop-enter {
   transform: translateY(-500px);
 }
-/* .drop-leave-active {
-    transform: translateY(-500px);
-    } */
+.drop-leave-active {
+  transform: translateY(-500px);
+}
 
 .dialog-wrap {
   position: fixed;
   width: 100%;
   height: 100%;
+  z-index:999;
 }
 .dialog-cover {
   background: #000;

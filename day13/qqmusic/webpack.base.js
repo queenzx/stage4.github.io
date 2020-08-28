@@ -7,18 +7,18 @@ let { CleanWebpackPlugin } = require('clean-webpack-plugin');
 let MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // vue插件
 let VuePlugin = require('vue-loader/lib/plugin');
-let path = require('path');
 
 module.exports = {
     resolve:{
         // 后缀名
-        extensions:[".js",".css",".vue"],
+        extensions:[".js",".css",".vue",".styl"],
         // 别名
         alias:{
-            "@slide":path.resolve(__dirname,"src/assets/slideShow")
+            "@css":"../css"
         }
     },
     //入口文件
+    // 从哪个文件开始查找相关的依赖
     entry:'./src/main.js',
     // 出口,输出路径
     // 指定打包生成的文件保存位置
@@ -34,35 +34,29 @@ module.exports = {
         rules:[
             // 处理css
             {
-                test: /\.css$/,
+                test: /\.(css|styl|stylus)$/,
                 use:[
                     MiniCssExtractPlugin.loader,//独立打包成一个css文件
-                    // 'vue-style-loader',
-                    'css-loader'
+                    'css-loader',
+                    'stylus-loader'
                 ]
             },
             // 处理图片
             {
                 test:/\.(jpg|png|gif|jpeg)$/,
                 use:{
-                    // 将图片保存在某个路径
-                    // loader:'file-loader',
-                    // 将图片转换成base64格式
                     loader:'url-loader',
                     options:{
-                        // 不使用默认的md5hash值,指定名称
                         name:'[name]-[hash:6].[ext]',
-                        // 输出路径
                         outputPath:'images/',
-                        // 限制图片大小
-                        limit:20*1024,
-                        esModule:false//默认是true,转换成模块化对象
+                        limit:30*1024,
+                        esModule:false
                     }
                 }
             },
             // 字体文件
             {
-                test:/\.(ttf|woff)$/,
+                test:/\.(ttf|woff|eot|svg)$/,
                 use:'file-loader'
             },
             // babel处理ES6
@@ -82,7 +76,7 @@ module.exports = {
     // plugins代表插件,是一个数组
     plugins:[
         new HtmlPlugin({
-            template:'./src/index.html'
+            template:'./src/testWeb.html'
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({

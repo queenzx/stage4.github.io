@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
       <div class='app-head'>
         <div class="app-head-inner">
         <router-link :to="{path: '/'}">
@@ -9,14 +9,14 @@
           <ul class="nav-list">
             <li></li>
             <!--<li>退出</li>-->
-            <li>登录</li>
+            <li @click="open">登录</li>
             <li >注册</li>
           </ul>
         </div>  
       </div>
       </div>
       <div class='container'>
-        <router-view></router-view>
+        <Main :showLog="show" @close='close'></Main>
       </div>
       <div class='app-foot'>
           <p>© 2017 web vue-project</p>
@@ -24,9 +24,24 @@
   </div>
 </template>
 <script>
-
+  import Main from "./components/Main"
   export default {
-    
+    data() {
+      return {
+        show: false
+      }
+    },
+    methods: {
+      open(){
+        this.show = true
+      },
+      close(){
+        this.show = false
+      }
+    },
+    components: {
+      Main
+    }
   }
 </script>
 
