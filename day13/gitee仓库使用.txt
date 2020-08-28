@@ -1,0 +1,19 @@
+gitee仓库使用
+    1) 新建仓库
+        点击仓库右边的+,输入仓库名,选择语言(JavaScript等),点击创建
+    2) 配置仓库SSH公钥
+        个人头像-->设置-->安全设置-->SSH公钥gongy
+        找到C盘目录下的用户文件夹,找到里面的.ssh文件夹,找到里面的id_rsa.pub文件,把里面的内容复制粘贴到公钥输入栏,点击确定,输入验证密码
+    3) 关联本地仓库
+        新建文件夹(文件夹里要有内容,空文件夹会被忽略),右击git bush here,打开命令输入行
+        输入git init  初始化仓库
+        git add -A    暂存所有内容
+        git status    查看状态
+        git commit -m "初始化QQ音乐"  在本地仓库提交
+        git status    查看状态(显示为: nothing to commit, working tree clean)可以推送到远程仓库
+        git log  查看所有提交的状态
+        下面两句命令在初次建远程仓库时会显示,可以直接复制
+        git remote add origin https://gitee.com/xxx/qqmusic.git (建立远程关联)
+        git push -u origin master (推送到远程仓库)
+
+

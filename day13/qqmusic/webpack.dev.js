@@ -14,6 +14,7 @@ module.exports = merge(base,{
         overlay:{
             errors:true,//出错时显示错误
         },
+        historyApiFallback:true,//解决路由刷新404错误
         hot:true//开启热加载
     }
 })
