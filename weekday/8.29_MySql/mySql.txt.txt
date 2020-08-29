@@ -1,0 +1,57 @@
+一、mySql命令行操作
+    1) 运行输入cmd,打开window命令行,输入mysql -u root -p进入mySql操作命令行
+    2) mysql命令连接数据库
+    3) 数据库命令操作
+        创建数据库: create database 数据库名;
+        使用数据库: use 数据库名
+        创建表结构:
+            create table 表名(
+                字段1 数据类型(长度),
+                字段2 数据类型(长度),
+                字段3 数据类型(长度)
+            )
+        字符串的数据类型有两种 char,varchar,varchar2
+        数字类型: number
+        create table stus(
+            id int(3),
+            name varchar(20),
+            birth date
+        );
+
+        CRUD: 增删改查
+
+        向表中添加数据
+            insert into 表名 values (val1,val2,val3,...);
+            insert into stus values (1,'zhangsan',now());
+            insert into stus values (2,'lisi',now());
+            insert into stus values (3,'wangwu',now());
+            insert into stus values (4,'keji',now());
+
+            insert into stus(birth,name,id) values (now(),'bbrr',5);
+
+        查询数据
+            select * from 表名
+            select * from stus;
+            *代表的是通配符
+            select id,name from stus;
+
+            有条件的查询某些数据
+            select * from stus where id=4;
+            select * from stus where id=4 or id=5;(或)
+            select * from stus where id=4 and id=5;(且)
+            select * from stus where id!=4;(取反)
+            select * from stus where id<>4;
+
+        修改数据
+            update 表名 set key=val,key=val,...
+            update stus set name='wangjian' where id=5;
+            update stus set name='zhaoliu',id=6 where id=5;
+
+        删除数据
+            delete from 表名 默认删除表中的所有数据
+            delete from 表名 where 条件 有条件的删除数据
+
+二、nodeJs中mysql模块
+
+    在node.js中也可以使用mysql模块
+        安装mysql模块: cnpm i mysql
