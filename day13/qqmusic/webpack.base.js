@@ -36,7 +36,14 @@ module.exports = {
         rules:[
             // 处理css
             {
-                test: /\.(css|styl|stylus)$/,
+                test: /\.css$/,
+                use:[
+                    MiniCssExtractPlugin.loader,//独立打包成一个css文件
+                    'css-loader'
+                ]
+            },
+            {
+                test: /\.(styl|stylus)$/,
                 use:[
                     MiniCssExtractPlugin.loader,//独立打包成一个css文件
                     'css-loader',
