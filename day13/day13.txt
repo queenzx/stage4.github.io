@@ -76,6 +76,51 @@
             <Slider :pics="slider"></Slider>
     2) 热门歌曲
         请求地址
+        https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg
         请求参数
+        {
+            picmid: 1
+            rnd: Math.random()
+            g_tk_new_20200303: 5381
+            g_tk: 5381
+            loginUin: 0
+            hostUin: 0
+            format: "json"
+            inCharset: "utf8"
+            outCharset: "utf-8"
+            notice: 0
+            platform: "yqq.json"
+            needNewCode: 0
+            categoryId: 10000000
+            sortId: 5
+            sin: 0
+            ein: 19
+        }
+        跨域请求使用proxy代理的方式
+            proxy:{
+                content:[url,url,url,....],
+                target:"https://c.y.qq.com/",
+                changeOrigin:true,
+                header: {
+                    host: 'c.y.qq.com',
+                    referer: "https://c.y.qq.com"
+                }
+            }
+        在recommend.vue组件中调用recommend-list.vue组件
+        recom-list组件创建成功后执行获取数据的方法，该方法在methods中定义，实际获取数据的请求由recommend.js发送
+        获取到数据后将数据解析并赋值给recom-list组件中的数据
+    3) 滚动效果
+        可以使用better-scroll(1.15.2版本)组件
+        安装模块: cnpm i better-scroll@1.15.2 --save
+        我们采用vant组件库中的List组件
+        因为滚动效果在其他地方也会多次使用，所以讲滚动效果单独封装成一个独立的通用基础组件
+        在src/base/scroll下新建文件scroll.vue
+        模板中只有一个插槽
+            定义initScroll方法初始化scroll对象
+            然后在mounted中调用初始化方法
+            scroll对象必须在页面渲染成功后才可以创建,所以初始化方法需要写在this.$nextTick中以保证是在页面渲染结束后执行的
+
+    7.歌手页
+                
 
                 

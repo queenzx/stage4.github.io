@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ul class="recommend-list">
+        <ul>
             <li v-for="(d,i) in list" :key="i" class="item">
                 <div class="icon">
                     <img :src="d.imgurl" alt="" class="recom-img">

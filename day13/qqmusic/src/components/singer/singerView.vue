@@ -1,30 +1,63 @@
 <template>
-  <div class="singer">
-    <singer-view></singer-view>
-  </div>
+    <Scroll class="listview">
+        <ul>
+            <!-- 歌手分类列表 -->
+            <li class="list-group" v-for="(singer,idx) in singerList" :key="idx">
+                <h2 class="list-group-title">{{singer.title}}</h2>
+                <!-- 歌手列表 -->
+                <ul>
+                    <li v-for="(item,ix) in singer.singers" :key="ix" class="list-group-item">
+                        <img :src="item.avatar" class="avatar">
+                        <span class="name">{{item.fname}}</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="list-shortcut">
+            <ul>
+                <li v-for="(key,i) in getIndex" :key="i">
+                    {{key}}
+                </li>
+            </ul>
+        </div>
+    </Scroll>
 </template>
 
 <script>
-import SingerView from './singerView'
+import {getSingerList} from '../../api/singer'
+import Scroll from '../../base/scroll/Scroll'
 export default {
-  components:{
-    SingerView
-  }
+    data() {
+        return {
+            singerList:[]
+        }
+    },
+    computed: {
+        getIndex(){
+            return this.singerList.map(val=>{
+                return val.title[0];
+            })
+        }
+    },
+    methods: {
+        _getSingerList(){
+            getSingerList().then(data=>{
+                this.singerList = data;
+            });
+        }
+    },
+    created() {
+        this._getSingerList();
+    },
+    components:{
+        Scroll
+    }
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus" scoped>
 @import '~@common/stylus/variable'
-.singer
-  position fixed
-  top 88px
-  bottom 0
-  width 100%
-  .slide-enter-active, .slide-leave-active
-    transition all 0.5s
-  .slide-enter, .slide-leave-to
-    transform translateX(100%)
-  .listview
+.listview
     position relative
     width 100%
     height 100%
