@@ -88,7 +88,7 @@ export default {
         margin-right 15px
       .name
         no-wrap()
-        color #fff
+        color black 
         font-size 16px
       .desc
         no-wrap()

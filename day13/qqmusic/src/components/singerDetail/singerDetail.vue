@@ -16,17 +16,17 @@ export default {
     }
   },
   methods: {
-      _getSongList(){
-        getSongList(this.singer.fid).then(list=>{
-          list.forEach(val=>{
-            this.songs.push(new Song(val.musicData));
-          })
+    _getSongList(){
+      getSongList(this.singer.fid).then(list=>{
+        list.forEach(val=>{
+          this.songs.push(new Song(val.musicData));
         })
-      }
-    },
-    created() {
-      this._getSongList()
-    },
+      })
+    }
+  },
+  created() {
+    this._getSongList()
+  },
   computed: {
     ...mapGetters(['getSingerInfo']),
     singer(){
