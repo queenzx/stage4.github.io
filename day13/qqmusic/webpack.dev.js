@@ -23,22 +23,35 @@ module.exports = merge(base,{
                 changeOrigin:true
             }
         }, */
-        proxy:[{
-            context:[
-                "/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg",
-                "/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg",
-                "/v8/fcg-bin/v8.fcg",
-                "/v8/fcg-bin/fcg_v8_singer_track_cp.fcg",
-                "/splcloud/fcgi-bin/gethotkey.fcg",
-                "/splcloud/fcgi-bin/smartbox_new.fcg"
-            ],
-            target:"http://c.y.qq.com",
-            changeOrigin:true,
-            headers:{
-                referer:"https://c.y.qq.com",
-                host:"c.y.qq.com"
+        proxy:[
+            {
+                context:[
+                    "/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg",
+                    "/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg",
+                    "/v8/fcg-bin/v8.fcg",
+                    "/v8/fcg-bin/fcg_v8_singer_track_cp.fcg",
+                    "/splcloud/fcgi-bin/gethotkey.fcg",
+                    "/splcloud/fcgi-bin/smartbox_new.fcg"
+                ],
+                target:"http://c.y.qq.com",
+                changeOrigin:true,
+                headers:{
+                    referer:"https://c.y.qq.com",
+                    host:"c.y.qq.com"
+                }
+            },
+            {
+              context: [
+                '/cgi-bin/musicu.fcg'
+              ],
+              target: 'https://u.y.qq.com',
+              changeOrigin: true,
+              headers: {
+                referer: "https://u.y.qq.com",
+                host: 'u.y.qq.com'
+              }
             }
-        }],
+        ],
         before(app){
             // 跳转到歌手页
             app.get('/singer/:id,',(req,res)=>{

@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <div class="search-box-wrapper">
-      <search-box @queryChange="change"></search-box>
+      <search-box @queryChange="change" @cache="his"></search-box>
     </div>
     <div class="shortcut-wrapper" v-show="show">
       <div class="shortcut">
@@ -13,7 +13,18 @@
             </li>
           </ul>
         </div>
-        <div class="search-history"></div>
+        <div class="search-history">
+          <ul>
+            <li class="title" v-for="(h,i) in history" :key="i">
+              <span class="text">
+                {{h}}
+              </span>
+              <span class="clear">
+                <i class="icon-clear" @click="del(i)"></i>
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="search-result" v-show="!show">
@@ -31,8 +42,17 @@ export default {
     return {
       hotkey: [],
       searchData: [],
-      show: true
+      show: true,
+      history: []
     }
+  },
+  updated() {
+    let his = JSON.parse(localStorage.getItem("history")) || [];
+    if(his.length==this.history.length){
+      return ;
+    }
+    this.history.push(...his)
+    console.log(this.history)
   },
   methods: {
     _getHotKey(){
@@ -42,18 +62,28 @@ export default {
     },
     change(query){
       if(query==''){
-        this.show = true
+        this.show = true;
         return ;
       }
-      this.show = false
+      this.show = false;
       // 获取query相关的搜索结果
       searchKey(query).then(data=>{
         this.searchData = data
       })
+    },
+    his(query){
+      console.log(11);
+      let history = JSON.parse(localStorage.getItem("history")) || [];
+      history.push(query);
+      this.history.push(query);
+      localStorage.setItem("history",JSON.stringify(history));
+    },
+    del(i){
+      this.history.split(i);
     }
   },
   created() {
-    this._getHotKey()
+    this._getHotKey();
   },
   components: {
     SearchBox,
