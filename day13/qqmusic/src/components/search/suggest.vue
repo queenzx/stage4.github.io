@@ -3,7 +3,7 @@
     <ul class="suggest-list">
       <li class="suggest-item" v-for="(o,i) in result" :key="i">
         <div class="icon">
-          <i  :class="icon(o.type)"></i>
+          <i :class="icon(o.type)"></i>
         </div>
         <div class="name">
           <p class="text">{{o.name}}</p>
@@ -20,14 +20,14 @@ export default{
   methods: {
     icon(type){
       if(type=='singer'){
-        return 'icon-mine';
+        return 'icon-mine'
       }
-      return 'icon-music';
+      return 'icon-music'
     }
   },
-  props:{
-    result:{
-      type:Array,
+  props: {
+    result: {
+      type: Array,
       default(){
         return []
       }

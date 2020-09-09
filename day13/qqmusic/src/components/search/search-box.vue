@@ -7,6 +7,7 @@
 </template>
 
 <script >
+import bus from '../../base/bus/bus'
 
 export default {
   data() {
@@ -16,11 +17,18 @@ export default {
   },
   methods: {
     clear(){
-      this.query = "";
+      this.query = ""
     },
     cache(){
-      this.$emit("cache",this.query);
+      this.$emit("cache",this.query)
     }
+  },
+  mounted() {
+    // 挂载后监听bus中数据的变化
+    bus.$on("chooseKey",data=>{
+      // 将数据赋值给query属性
+      this.query = data
+    })
   },
   watch: {
     query(newVal){
